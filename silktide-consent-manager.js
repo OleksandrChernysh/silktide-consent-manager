@@ -575,12 +575,7 @@ class SilktideCookieBanner {
     this.config.cookieTypes.forEach((type) => {
       let accepted = true;
       // Set localStorage and run accept/reject callbacks
-      if (type.required == true) {
-        localStorage.setItem(
-          `silktideCookieChoice_${type.id}${this.getBannerSuffix()}`,
-          accepted.toString(),
-        );
-      } else if (type.defaultValue) {
+      if (type.required == true || type.defaultValue) {
         localStorage.setItem(
           `silktideCookieChoice_${type.id}${this.getBannerSuffix()}`,
           accepted.toString(),
