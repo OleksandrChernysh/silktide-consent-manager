@@ -132,7 +132,9 @@
   bottom: 16px;
   right: 16px;
   width: 600px;
+  overflow: auto;
   max-width: calc(100% - 32px);
+  max-height: calc(100vh - 32px);
   transform: translate(0, -20px);
   opacity: 0;
   animation: silktide-slideInDown 350ms ease-out forwards;
@@ -172,7 +174,7 @@
   display: flex;
   gap: 5px;
   border: none;
-  padding: 0px;
+  padding: 15px 0px;
   background-color: transparent;
   color: var(--primaryColor);
   cursor: pointer;
@@ -213,11 +215,13 @@
 }
 
 #silktide-banner a.silktide-logo {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   fill: var(--primaryColor); /* passed down to svg > path */
   margin-left: auto;
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
 }
 
 
@@ -250,6 +254,7 @@
 #silktide-modal {
   display: none;
   pointer-events: auto;
+  overflow: auto;
   width: 800px;
   max-width: 100%;
   max-height: 100%;
@@ -289,7 +294,7 @@
 #silktide-modal .modal-close {
   display: inline-flex;
   border: none;
-  padding: 10px;
+  padding: 13px;
   border: 0px;
   cursor: pointer;
   background: var(--backgroundColor);
@@ -306,9 +311,7 @@
 
 #silktide-modal section {
   flex: 1;
-  overflow-y: auto;
   margin-top: 32px;
-  padding-right: 7px; /* Prevents scrollbar from appearing over the switches */
 }
 
 #silktide-modal section::-webkit-scrollbar {
@@ -466,6 +469,7 @@
 
 #silktide-modal footer a {
   margin-left: auto;
+  padding: 14px 0px;
 }
 
 /* Cookie Icon */
