@@ -17,84 +17,87 @@ A free, lightweight and customizable consent manager/cookie banner for websites,
 
 To use the Silktide Consent Manager, include the following files in your project:
 
-1. **JavaScript File**: `silktide-consent-manager.js`
+1. **JavaScript Module**: `silktide-consent-manager.js`
 2. **CSS File**: `silktide-consent-manager.css`
 
-You can either download these files and host them yourself.
+You can either download these files and host them yourself, or install via npm.
 
-### Example HTML
+### Example HTML (ES6 Module)
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
-  <link rel="stylesheet" href="path/to/silktide-consent-manager.css">
-</head>
-<body>
-  <script src="path/to/silktide-consent-manager.js"></script>
-  <script>
-    // Initialize the consent manager with your configuration
-    silktideCookieBannerManager.updateCookieBannerConfig({
-      cookieTypes: [
-        {
-          id: 'essential',
-          name: 'Essential Cookies',
-          description: 'These cookies are necessary for the website to function and cannot be switched off.',
-          required: true,
-          defaultValue: true,
-        },
-        {
-          id: 'analytics',
-          name: 'Analytics Cookies',
-          description: 'These cookies help us understand how visitors interact with the website.',
-          defaultValue: true,
-          onAccept: function() {
-            console.log('Analytics cookies accepted');
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Website</title>
+    <link rel="stylesheet" href="path/to/silktide-consent-manager.css" />
+  </head>
+  <body>
+    <script type="module">
+      import SilktideCookieBanner from "./path/to/silktide-consent-manager.js";
+
+      // Initialize the consent manager with your configuration
+      const cookieBanner = new SilktideCookieBanner({
+        cookieTypes: [
+          {
+            id: "essential",
+            name: "Essential Cookies",
+            description:
+              "These cookies are necessary for the website to function and cannot be switched off.",
+            required: true,
+            defaultValue: true,
           },
-          onReject: function() {
-            console.log('Analytics cookies rejected');
+          {
+            id: "analytics",
+            name: "Analytics Cookies",
+            description:
+              "These cookies help us understand how visitors interact with the website.",
+            defaultValue: true,
+            onAccept: () => {
+              console.log("Analytics cookies accepted");
+            },
+            onReject: () => {
+              console.log("Analytics cookies rejected");
+            },
+          },
+          {
+            id: "marketing",
+            name: "Marketing Cookies",
+            description: "These cookies are used to deliver personalized ads.",
+            defaultValue: false,
+            onAccept: () => {
+              console.log("Marketing cookies accepted");
+            },
+            onReject: () => {
+              console.log("Marketing cookies rejected");
+            },
+          },
+        ],
+        text: {
+          banner: {
+            description: `<p>We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>`,
+            acceptAllButtonText: "Accept all",
+            acceptAllButtonAccessibleLabel: "Accept all cookies",
+            rejectNonEssentialButtonText: "Reject non-essential",
+            rejectNonEssentialButtonAccessibleLabel: "Reject non-essential",
+            preferencesButtonText: "Preferences",
+            preferencesButtonAccessibleLabel: "Toggle preferences",
+          },
+          preferences: {
+            title: "Customize your cookie preferences",
+            description: `<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>`,
+            creditLinkText: "Get this banner for free",
+            creditLinkAccessibleLabel: "Get this banner for free",
           },
         },
-        {
-          id: 'marketing',
-          name: 'Marketing Cookies',
-          description: 'These cookies are used to deliver personalized ads.',
-          defaultValue: false,
-          onAccept: function() {
-            console.log('Marketing cookies accepted');
-          },
-          onReject: function() {
-            console.log('Marketing cookies rejected');
-          },
+        position: {
+          banner: "bottomRight", // Options: 'bottomRight', 'bottomLeft', 'center', 'bottomCenter'
+          cookieIcon: "bottomLeft", // Options: 'bottomRight', 'bottomLeft'
         },
-      ],
-      text: {
-        banner: {
-          description: `<p>We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>`,
-          acceptAllButtonText: 'Accept all',
-          acceptAllButtonAccessibleLabel: 'Accept all cookies',
-          rejectNonEssentialButtonText: 'Reject non-essential',
-          rejectNonEssentialButtonAccessibleLabel: 'Reject non-essential',
-          preferencesButtonText: 'Preferences',
-          preferencesButtonAccessibleLabel: 'Toggle preferences',
-        },
-        preferences: {
-          title: "Customize your cookie preferences",
-          description: `<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>`,
-          creditLinkText: 'Get this banner for free',
-          creditLinkAccessibleLabel: 'Get this banner for free',
-        },
-      },
-      position: {
-        banner: 'bottomRight', // Options: 'bottomRight', 'bottomLeft', 'center', 'bottomCenter'
-        cookieIcon: 'bottomLeft', // Options: 'bottomRight', 'bottomLeft'
-      },
-    });
-  </script>
-</body>
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -119,6 +122,7 @@ An array of objects defining the different types of cookies. Each object should 
 An object containing text strings used in the banner and preferences modal:
 
 #### `banner`
+
 - `description`: Main text content for the banner
 - `acceptAllButtonText`: Text for the accept all button
 - `acceptAllButtonAccessibleLabel`: Accessibility label for accept all button
@@ -128,6 +132,7 @@ An object containing text strings used in the banner and preferences modal:
 - `preferencesButtonAccessibleLabel`: Accessibility label for preferences button
 
 #### `preferences`
+
 - `title`: Title text for the preferences modal
 - `description`: Description text for the preferences modal
 - `creditLinkText`: Text for the credit link
@@ -145,8 +150,8 @@ An object defining the position of the banner and cookie icon:
 - `onAcceptAll`: A callback function triggered when the user clicks "Accept All"
 - `onRejectAll`: A callback function triggered when the user clicks "Reject Non-Essential"
 
-
 ## Styling
+
 The consent manager comes with a default set of styles, but you can easily customize them by overriding the CSS variables at the top of the `silktide-consent-manager.css` file.
 
 The following variables are scoped to `#silktide-wrapper` to prevent them from being overridden by styles coming from the site the consent manager is used on:
@@ -155,19 +160,21 @@ The following variables are scoped to `#silktide-wrapper` to prevent them from b
 --focus: 0 0 0 2px #ffffff, 0 0 0 4px #000000, 0 0 0 6px #ffffff;
 --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
 --fontFamily: Helvetica Neue, Segoe UI, Arial, sans-serif;
---primaryColor: #533BE2; /* Primary color for buttons and links */
---backgroundColor: #FFFFFF; /* Background color for the banner and modal */
---textColor: #253B48; /* Text color */
+--primaryColor: #533be2; /* Primary color for buttons and links */
+--backgroundColor: #ffffff; /* Background color for the banner and modal */
+--textColor: #253b48; /* Text color */
 --backdropBackgroundColor: #00000033; /* Backdrop background color */
 --backdropBackgroundBlur: 0px; /* Backdrop blur effect amount */
---cookieIconColor: #533BE2; /* Cookie icon color */
---cookieIconBackgroundColor: #FFFFFF; /* Cookie icon background color */
+--cookieIconColor: #533be2; /* Cookie icon color */
+--cookieIconBackgroundColor: #ffffff; /* Cookie icon background color */
 ```
 
 ## License
+
 This project is licensed under the [MIT License](./LICENSE).
 
 ## Contributing
+
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or fork this repository and submit a pull request.
 
 Thank you for using the Silktide Consent Manager! We hope it helps you manage cookie consent on your website effectively.
